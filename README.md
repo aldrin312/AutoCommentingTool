@@ -22,9 +22,6 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    npm install commander
    ```
-   ```sh
-   npm install commander
-   ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
