@@ -1,5 +1,9 @@
+#!/usr/bin/env node
+
 import Groq from "groq-sdk";
 import fs from "fs";
+import { program } from "commander";
+
 
 const groq = new Groq({ apiKey: "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" });
 
@@ -21,16 +25,16 @@ export async function getGroqChatCompletion(data) {
   });
 }
 
-export async function readFromFile(){
+export async function readFromFile(filename){
 
     // Use fs.readFile() method to read the file
-    fs.readFile('testFile.js', 'utf8',async function (err, data) {
+    fs.readFile(filename, 'utf8',async function (err, data) {
         // Display the file content
        // console.log(data);
        const chatCompletion = await getGroqChatCompletion(data);
        // Print the completion returned by the LLM.
-       writeIntoFile(chatCompletion.choices[0]?.message?.content || "");
-       //console.log(chatCompletion.choices[0]?.message?.content || "");
+      //writeIntoFile(chatCompletion.choices[0]?.message?.content || "");
+       console.log(chatCompletion.choices[0]?.message?.content || "");
     });
     //console.log("data read")
 
@@ -43,6 +47,18 @@ function writeIntoFile(data){
 })
 }
 
+program
+    .version('1.0.0')
+    .argument('<filename>')
+    .description('Auto comment for a source file')
+    .action(async filename => {
+        //console.log(filename);
+        console.log(readFromFile(filename));
+    });
+
+
+program.parse();
+
 
 //main();
-console.log(readFromFile());
+//console.log(readFromFile());

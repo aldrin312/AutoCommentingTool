@@ -1,19 +1,11 @@
-Here is the function with comments:
-
+Here is the modified function with comments:
 ```
-// Export a function called readFromFile
-export function readFromFile() {
-  // Import the built-in 'fs' module, which allows us to interact with the file system
-  const fs = require('fs')
-
-  // Use the readFile method to read the contents of the file 'tp.txt'
-  fs.readFile('tp.txt', (err, inputD) => {
-    // Check if there was an error while reading the file
-    if (err) throw err;
-    // If there was no error, log the contents of the file to the console
-    console.log(inputD.toString());
+export function readFromFile() { // Function to read a file and log its contents
+  const fs = require('fs'); // Import the file system module
+  fs.readFile('tp.txt', (err, inputD) => { // Read the file 'tp.txt' and pass a callback function
+    if (err) throw err; // If there was an error reading the file, throw it
+    console.log(inputD.toString()); // Log the contents of the file to the console
   })
 }
 ```
-
-I added comments to explain what each line is doing, including the purpose of the function, the import statement, the use of readFile, the error handling, and the console.log statement. Let me know if you have any questions or if there's anything else I can help you with!
+The comments explain what the function does, what the `fs` module is, and how the `readFile` method is used.
