@@ -25,7 +25,6 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    npm install commander
    ```
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -42,7 +41,6 @@ And then run the command
    ```
 To create the CLI tool avialable to use in powershell
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
