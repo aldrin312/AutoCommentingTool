@@ -37,7 +37,6 @@ export async function readFromFile(filename){
        console.log(chatCompletion.choices[0]?.message?.content || "");
     });
     //console.log("data read")
-
 }
 
 function writeIntoFile(data){
@@ -48,7 +47,7 @@ function writeIntoFile(data){
 }
 
 program
-    .version('1.0.0')
+    .version('0.1')
     .argument('<filename>')
     .description('Auto comment for a source file')
     .action(async filename => {
