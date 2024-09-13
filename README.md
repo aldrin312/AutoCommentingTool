@@ -37,8 +37,12 @@ And then run the command
    ```sh
     npm link
    ```
-To create the CLI tool avialable to use in powershell
+To create the CLI tool avialable to use in powershell in any directory.
 
+Tool Execution:
+   ```sh
+    Autocomment <filename>
+   ```
 
 
 
