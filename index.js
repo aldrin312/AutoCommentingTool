@@ -46,7 +46,7 @@ export async function readFromFile(filename){
   });
 }
 // Function to write data to a file
-function writeIntoFile(data){
+async function writeIntoFile(data){
   fs.writeFile('Output.js', data, (err) => {
       // In case of a error throw err.
       if (err) throw err;
