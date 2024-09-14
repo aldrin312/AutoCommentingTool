@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-
 import Groq from "groq-sdk";
 import fs from "fs";
 import { program } from "commander";
+import {} from 'dotenv/config'
+
 
 // Initialize the Groq API with the provided API key
-const groq = new Groq({ apiKey: "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" });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // export async function main() {
 //   const chatCompletion = await getGroqChatCompletion();
@@ -21,7 +22,7 @@ export async function getGroqChatCompletion(data) {
     messages: [
       {
         role: "user",
-        content: "Add comments to this function " + data,
+        content: "Add comments to this file without altering the code" + data,
       },
     ],
     model: "llama3-8b-8192",
@@ -39,13 +40,14 @@ export async function readFromFile(filename){
     }
     const chatCompletion = await getGroqChatCompletion(data);
     //writeIntoFile(chatCompletion.choices[0]?.message?.content || "");
-      // Print the completion returned by the LLM.
-      console.log(chatCompletion.choices[0]?.message?.content || "");
+
+    // Print the completion returned by the LLM.
+    console.log(chatCompletion.choices[0]?.message?.content || "");
   });
 }
 // Function to write data to a file
 function writeIntoFile(data){
-  fs.writeFile('Output.txt', data, (err) => {
+  fs.writeFile('Output.js', data, (err) => {
       // In case of a error throw err.
       if (err) throw err;
   })
