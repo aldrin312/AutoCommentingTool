@@ -36,7 +36,7 @@ To do this run windows powershell in administration mode and run the command:
    ```sh
     Set-ExecutionPolicy RemoteSigned
    ```
-And then run the command to make it available in any directory.
+And then run the command:
    ```sh
     npm link
    ```
@@ -44,14 +44,16 @@ To create the CLI tool avialable to use in powershell in any directory.
 
 Tool Execution:
    ```sh
-    autocomment <filename>...
+    autocomment <filename> ...
    ```
 Options:
-    -s or --save <output-filename> - saves the output to the output folder with the designated filename.
+   `--save <output-filename>` or `-s <output-filename>`- saves the output to the output folder with the designated filename.
    Example:
    ```sh
     autocomment -s <output-filename> <filename>...
    ```
+   
+   
 
 
 
