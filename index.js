@@ -22,7 +22,10 @@ export async function getGroqChatCompletion(data) {
     messages: [
       {
         role: "user",
-        content: "Add comments to this file without altering the code" + data,
+        content: "only output a file and add comments to this source code," +
+        "don't include ``` in your output, " +
+        "don't include 'Here is the output with comments',"+
+        " no errors" + data,
       },
     ],
     model: "llama3-8b-8192",
@@ -30,7 +33,7 @@ export async function getGroqChatCompletion(data) {
 }
 
 // Function to read a file from the file system
-export async function readFromFile(filename){
+export async function readFromFile(filename,outputfile){
     // Read the file using the fs.readFile() method
   fs.readFile(filename, 'utf8',async function (err, data) {
     // Check for any errors while reading the file
@@ -39,15 +42,21 @@ export async function readFromFile(filename){
       return;
     }
     const chatCompletion = await getGroqChatCompletion(data);
-    //writeIntoFile(chatCompletion.choices[0]?.message?.content || "");
+
+    if(outputfile != null){
+      writeIntoFile(chatCompletion.choices[0]?.message?.content || "",outputfile);
+    }else{
+      console.log(chatCompletion.choices[0]?.message?.content || "");
+    }
 
     // Print the completion returned by the LLM.
-    console.log(chatCompletion.choices[0]?.message?.content || "");
+    //console.log(chatCompletion || "");
+
   });
 }
 // Function to write data to a file
-async function writeIntoFile(data){
-  fs.writeFile('Output.js', data, (err) => {
+async function writeIntoFile(data,fileName){
+  fs.writeFile(fileName, data, (err) => {
       // In case of a error throw err.
       if (err) throw err;
   })
@@ -56,14 +65,18 @@ async function writeIntoFile(data){
 // Define the CLI program
 program
     .version('0.1')
-    .argument('<filename>...')
+    //.argument('<filename>...')
+    .option('-s, --save <Name>', 'Put output in a file')
     .description('Auto comment for a source file')
-    .action(async filename=> {
+    .action(async Name=> {
       for (let index = 0; index < program.args.length; index++) {
         //console.log(program.args[index]);
-        console.log(readFromFile(program.args[index]));
+        console.log(readFromFile(program.args[index],Name.save));
       }
+
     });
+
+
 
 // Parse the command-line arguments
 program.parse(process.argv);
