@@ -45,8 +45,15 @@ To create the CLI tool avialable to use in powershell in any directory.
 
 Tool Execution:
    ```sh
-    Autocomment <filename>
+    Autocomment <filename>...
    ```
+Options:
+    -s or --save <output-filename> - saves the output to the designated filename.
+   Example:
+   ```sh
+    Autocomment -s <output-filename> <filename>...
+   ```
+
 
 
 
