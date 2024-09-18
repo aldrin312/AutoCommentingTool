@@ -46,7 +46,7 @@ Tool Execution:
    ```sh
     autocomment <filename> ...
    ```
-Options:
+Options: \
    `--save <output-filename>` or `-s <output-filename>`- saves the output to the output folder with the designated filename.
    Example:
    ```sh
