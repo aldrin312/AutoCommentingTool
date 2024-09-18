@@ -1,4 +1,3 @@
-(WIP README)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -48,7 +47,7 @@ Tool Execution:
     Autocomment <filename>...
    ```
 Options:
-    -s or --save <output-filename> - saves the output to the designated filename.
+    -s or --save <output-filename> - saves the output to the output folder with the designated filename.
    Example:
    ```sh
     Autocomment -s <output-filename> <filename>...
