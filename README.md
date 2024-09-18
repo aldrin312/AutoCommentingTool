@@ -21,7 +21,13 @@ This is an Auto Commenting CLI Tool that uses OpenAI.
    ```sh
    npm install commander
    ```
-
+   ```sh
+   npm install dotenv
+   ```
+4. Create a .env file and add your api into it
+    ```sh
+    GROQ_API_KEY=<api-key>
+   ```
 <!-- USAGE EXAMPLES -->
 ## Usage
 
