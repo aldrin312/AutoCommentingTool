@@ -44,13 +44,13 @@ To create the CLI tool avialable to use in powershell in any directory.
 
 Tool Execution:
    ```sh
-    Autocomment <filename>...
+    autocomment <filename>...
    ```
 Options:
     -s or --save <output-filename> - saves the output to the output folder with the designated filename.
    Example:
    ```sh
-    Autocomment -s <output-filename> <filename>...
+    autocomment -s <output-filename> <filename>...
    ```
 
 
