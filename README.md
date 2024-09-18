@@ -1,7 +1,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This is an Auto Commenting CLI Tool that uses OpenAI.
+This is an Auto Commenting CLI Tool that uses OpenAI. It can take any source code and output to the console or in a file a commented version of that file.
 
 ### Installation
 
@@ -36,7 +36,7 @@ To do this run windows powershell in administration mode and run the command:
    ```sh
     Set-ExecutionPolicy RemoteSigned
    ```
-And then run the command 
+And then run the command to make it available in any directory.
    ```sh
     npm link
    ```
