@@ -1,7 +1,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This is an Auto Commenting CLI Tool that uses OpenAI. It can take any source code and output to the console or in a file a commented version of that file.
+Autocomment is a Cli tool that automates the process of adding meaningful comments to your source code. By integrating with OpenAI’s language models, Autocomment generates insightful comments that enhance code readability and documentation.
 
 ### Installation
 
@@ -50,12 +50,19 @@ Tool Execution:
    ```sh
    node index.js <filename> ...
    ```
-Options: \
-   `--save <output-filename>` or `-s <output-filename>`- saves the output to the output folder with the designated filename.
-   Example:
+Options: 
+   - `--version` or `-v`: Shows the current version of Autocomment.
+   - `--help` or `-h`: Shows help menu.
+   - `--save <output-filename>` or `-s <output-filename>`: saves the output to the output folder with the designated filename.
    ```sh
     autocomment -s <output-filename> <filename>...
    ```
+
+##Future features
+- Customization: Allow user to specify how they want the comments to be generated
+- Option to add the api in Cli.
+- Save the outputs to multiple files.
+   
 
    
    
