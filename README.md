@@ -48,7 +48,7 @@ Tool Execution:
    ```
    Command can also be executed without changing execution policy or running npm link by running this command:
    ```sh
-   node index.js autocomment testfiles/testFile.js
+   node index.js testfiles/testFile.js
    ```
 Options: \
    `--save <output-filename>` or `-s <output-filename>`- saves the output to the output folder with the designated filename.
