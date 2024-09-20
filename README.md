@@ -58,7 +58,7 @@ Options:
     autocomment -s <output-filename> <filename>...
    ```
 
-##Future features
+## Future features
 - Customization: Allow user to specify how they want the comments to be generated
 - Option to add the api in Cli.
 - Save the outputs to multiple files.
