@@ -42,6 +42,14 @@ And then run the command:
    ```
 To create the CLI tool avialable to use in powershell in any directory.
 
+Or
+
+Run the command:
+
+```sh
+node index.js autocomment <filename>
+```
+
 Tool Execution:
    ```sh
     autocomment <filename> ...
