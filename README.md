@@ -50,9 +50,11 @@ Tool Execution:
    ```sh
    node index.js <filename> ...
    ```
+   
 Demo:
 
 ![](https://github.com/aldrin312/AutoCommentingTool/blob/main/assets/demo.gif)
+
 
 Options: 
    - `--version` or `-v`: Shows the current version of Autocomment.

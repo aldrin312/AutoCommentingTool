@@ -33,27 +33,41 @@ export async function getGroqChatCompletion(data) {
 }
 
 // Function to read a file from the file system
-export async function readFromFile(filename,outputfile){
-    // Read the file using the fs.readFile() method
-  fs.readFile(filename, 'utf8',async function (err, data) {
-    // Check for any errors while reading the file
-    if (err) {
-      console.error(`Error reading file: ${err}`);
-      return;
-    }
-    const chatCompletion = await getGroqChatCompletion(data);
+export async function readFromFile(filename, outputfile, tokenUsage) {
+  console.log(`Token usage flag: ${tokenUsage}`);
 
-    if(outputfile != null){
-      writeIntoFile(chatCompletion.choices[0]?.message?.content || "",outputfile);
-    }else{
-      console.log(chatCompletion.choices[0]?.message?.content || "");
-    }
+  return new Promise((resolve, reject) => {
+      // Read the file using the fs.readFile() method
+    fs.readFile(filename, 'utf8', async function (err, data) {
+      // Check for any errors while reading the file
+      if (err) {
+        console.error(`Error reading file: ${err}`);
+        reject(err);
+        return;
+      }
 
-    // Print the completion returned by the LLM.
-    //console.log(chatCompletion || "");
+      const chatCompletion = await getGroqChatCompletion(data);
 
+      // Output token usage if the flag is set
+      if (tokenUsage && chatCompletion.usage) {
+        console.log(`Token usage: ${JSON.stringify(chatCompletion.usage, null, 2)}`);
+      }
+      
+
+      if (outputfile != null) {
+        writeIntoFile(chatCompletion.choices[0]?.message?.content || "", outputfile);
+      } else {
+        console.log(chatCompletion.choices[0]?.message?.content || "");
+      }
+        
+        // Print the completion returned by the LLM.
+        //console.log(chatCompletion || "");
+
+      resolve(); // Resolve the promise after processing is done
+    });
   });
 }
+
 // Function to write data to a file
 async function writeIntoFile(data,fileName){
   fs.writeFile(fileName, data, (err) => {
@@ -64,17 +78,17 @@ async function writeIntoFile(data,fileName){
 
 // Define the CLI program
 program
-    .version('0.1')
-    //.argument('<filename>...')
-    .option('-s, --save <Name>', 'Put output in a file')
-    .description('Auto comment for a source file')
-    .action(async Name=> {
-      for (let index = 0; index < program.args.length; index++) {
-        //console.log(program.args[index]);
-        console.log(readFromFile(program.args[index],Name.save));
-      }
-
-    });
+  .version('0.1')
+  //.argument('<filename>...')
+  .option('-s, --save <Name>', 'Put output in a file')
+  .option('--token-usage', 'Log token usage')  // Added this line to handle token usage flag
+  .description('Auto comment for a source file')
+  .action(async (options) => {
+    const tokenUsage = options.tokenUsage;  // Get the value of the --token-usage flag
+    for (let index = 0; index < program.args.length; index++) {
+      await readFromFile(program.args[index], options.save, tokenUsage); // Added await to ensure async completion
+    }
+  });
 
 
 
