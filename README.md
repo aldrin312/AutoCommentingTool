@@ -50,6 +50,33 @@ Tool Execution:
    ```sh
    node index.js <filename> ...
    ```
+
+### New Feature: `--token-usage`
+
+The `--token-usage` flag has been added to display token statistics when generating comments. This can help monitor the number of tokens used in API requests, providing insight into the cost and efficiency of the request.
+
+#### Example Command
+
+```sh
+node index.js --token-usage <filename>
+```
+
+This will print the generated comments and output token usage statistics to the console.
+
+#### Example Output
+
+```json
+{
+  "queue_time": 0.003453426,
+  "prompt_tokens": 90,
+  "prompt_time": 0.010868842,
+  "completion_tokens": 123,
+  "completion_time": 0.1025,
+  "total_tokens": 213,
+  "total_time": 0.113368842
+}
+```
+
 Options: 
    - `--version` or `-v`: Shows the current version of Autocomment.
    - `--help` or `-h`: Shows help menu.
