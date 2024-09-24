@@ -49,14 +49,11 @@ export async function readFromFile(filename,outputfile){
       console.log(chatCompletion.choices[0]?.message?.content || "");
     }
 
-    // Print the completion returned by the LLM.
-    //console.log(chatCompletion || "");
-
   });
 }
 // Function to write data to a file
 async function writeIntoFile(data,fileName){
-  fs.writeFile(fileName, data, (err) => {
+  fs.writeFile('Outputs/'+fileName, data, (err) => {
       // In case of a error throw err.
       if (err) throw err;
   })
@@ -66,17 +63,14 @@ async function writeIntoFile(data,fileName){
 program
     .version('0.1')
     //.argument('<filename>...')
-    .option('-s, --save <Name>', 'Put output in a file')
+    .option('-s, --save <filename>', 'Put output in a file')
     .description('Auto comment for a source file')
-    .action(async Name=> {
+    .action(async filename=> {
       for (let index = 0; index < program.args.length; index++) {
         //console.log(program.args[index]);
-        console.log(readFromFile(program.args[index],Name.save));
+        readFromFile(program.args[index],filename.save);
       }
-
     });
-
-
 
 // Parse the command-line arguments
 program.parse(process.argv);

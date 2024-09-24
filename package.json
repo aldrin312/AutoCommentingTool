@@ -40,6 +40,6 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "autoComment": "./index.js"
+    "autoComment": "./index.js" 
   }
 }
