@@ -35,6 +35,7 @@ export async function readFromFile(filename, outputfile, tokenUsage,apiKey) {
 
     //check if the file extention is valid
     if (extention.search("js|ts|cpp|java|c|py|cs|PHP|swift|html|htm") === -1) {
+      //creating custom error for invalid file
       const error = new Error("Invalid file format.");
       console.error(`${error}`);
       return;
