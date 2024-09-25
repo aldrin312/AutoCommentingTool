@@ -59,7 +59,8 @@ Demo:
 Options: 
    - `--version` or `-v`: Shows the current version of Autocomment.
    - `--help` or `-h`: Shows help menu.
-   - `--save <output-filename>` or `-s <output-filename>`: saves the output to the output folder with the designated filename.
+   - `--save <output-filename>` or `-s <output-filename>`: Saves the output to the output folder with the designated filename.
+   - `--api <api-key>` or `-a <api-key>`: Input api.
    ```sh
     autocomment -s <output-filename> <filename>...
    ```
@@ -86,7 +87,6 @@ This will print the generated comments and output token usage statistics to the 
 
 ## Future features
 - Customization: Allow user to specify how they want the comments to be generated
-- Option to add the api in Cli.
 - Save the outputs to multiple files.
    
 
