@@ -5,12 +5,19 @@ import fs from "fs";
 import { program } from "commander";
 import {} from 'dotenv/config'
 
-// Initialize the Groq API with the provided API key
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+// export async function main() {
+//   const chatCompletion = await getGroqChatCompletion();
+//   // Print the completion returned by the LLM.
+//   console.log(chatCompletion.choices[0]?.message?.content || "");
+// }
 
 // Function to get the chat completion from the LLM
-export async function getGroqChatCompletion(data) {
-    // Create a new chat completion request with the LLM model and the user message
+export async function getGroqChatCompletion(data,api) {
+  // Initialize the Groq API with the provided API key
+  const groq = new Groq({ apiKey: api});
+
+  // Create a new chat completion request with the LLM model and the user message
   return groq.chat.completions.create({
     messages: [
       {
@@ -46,8 +53,8 @@ export async function readFromFile(filename, outputfile, tokenUsage) {
         console.error(`${err}`);
         return;
       }
-      //create the chat completion with the api
-      const chatCompletion = await getGroqChatCompletion(data);
+
+      const chatCompletion = await getGroqChatCompletion(data,apiKey);
 
       // Output token usage if the flag is set
       if (tokenUsage && chatCompletion.usage) {
@@ -82,12 +89,21 @@ program
   .version('0.1')
   //.argument('<filename>...')
   .option('-s, --save <Name>', 'Put output in a file')
-  .option('-t, --token-usage', 'Log token usage')  // Added this line to handle token usage flag
+  .option('--token-usage', 'Log token usage')  // Added this line to handle token usage flag
+  .option('-a, --api <apiKey>', 'Input api key')
   .description('Auto comment for a source file')
   .action(async (options) => {
     const tokenUsage = options.tokenUsage;  // Get the value of the --token-usage flag
+
+    var apiKey; //Setting up which api to use.
+    if (options.api) {
+      apiKey = options.api; //If user use --api
+    }else{
+      apiKey =process.env.GROQ_API_KEY;
+    }
+
     for (let index = 0; index < program.args.length; index++) {
-      await readFromFile(program.args[index], options.save, tokenUsage); // Added await to ensure async completion
+      await readFromFile(program.args[index], options.save, tokenUsage, apiKey); // Added await to ensure async completion
     }
   });
 // Parse the command-line arguments
