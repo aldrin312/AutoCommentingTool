@@ -34,38 +34,46 @@ export async function getGroqChatCompletion(data) {
 
 // Function to read a file from the file system
 export async function readFromFile(filename, outputfile, tokenUsage) {
-  console.log(`Token usage flag: ${tokenUsage}`);
 
   return new Promise((resolve, reject) => {
-      // Read the file using the fs.readFile() method
-    fs.readFile(filename, 'utf8', async function (err, data) {
-      // Check for any errors while reading the file
-      if (err) {
-        console.error(`Error reading file: ${err}`);
-        reject(err);
-        return;
-      }
-
-      const chatCompletion = await getGroqChatCompletion(data);
-
-      // Output token usage if the flag is set
-      if (tokenUsage && chatCompletion.usage) {
-        console.log(`Token usage: ${JSON.stringify(chatCompletion.usage, null, 2)}`);
-      }
       
+    try{
+      // Read the file using the fs.readFile() method
+      fs.readFile(filename, 'utf8', async function (err, data) {
+        // Check for any errors while reading the file
+        if (err) {
+          console.error(`${err}`);
+          return;
+        }
+        //create the chat completion with the api
+        const chatCompletion = await getGroqChatCompletion(data);
 
-      if (outputfile != null) {
-        writeIntoFile(chatCompletion.choices[0]?.message?.content || "", outputfile);
-      } else {
-        console.log(chatCompletion.choices[0]?.message?.content || "");
-      }
+        // Output token usage if the flag is set
+        if (tokenUsage && chatCompletion.usage) {
+          console.log(`Token usage: ${JSON.stringify(chatCompletion.usage, null, 2)}`);
+        }
         
-        // Print the completion returned by the LLM.
-        //console.log(chatCompletion || "");
+        //outputs
+        if (outputfile != null) {
+          //write the output to a file
+          writeIntoFile(chatCompletion.choices[0]?.message?.content || "", outputfile);
+        } else {
+          //write output to the console.
+          console.log(chatCompletion.choices[0]?.message?.content || "");
+        }
+          
+          // Print the completion returned by the LLM.
+          //console.log(chatCompletion || "");
 
-      resolve(); // Resolve the promise after processing is done
-    });
+        resolve(); // Resolve the promise after processing is done
+      });
+    }
+    catch (err){
+    console.log(err);
+
+    }
   });
+  
 }
 
 // Function to write data to a file
@@ -89,7 +97,6 @@ program
       await readFromFile(program.args[index], options.save, tokenUsage); // Added await to ensure async completion
     }
   });
-
 // Parse the command-line arguments
 program.parse(process.argv);
 
