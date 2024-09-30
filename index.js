@@ -4,6 +4,7 @@ import Groq from "groq-sdk";
 import fs from "fs";
 import { program } from "commander";
 import {} from 'dotenv/config'
+import toml from 'toml';
 
 
 // Function to get the chat completion from the LLM
@@ -88,17 +89,31 @@ program
   .option('-a, --api <apiKey>', 'Input api key')
   .description('Auto comment for a source file')
   .action(async (options) => {
-    const tokenUsage = options.tokenUsage;  // Get the value of the --token-usage flag
+
+    let configFile, config;
+    if (fs.existsSync('./AutoCommentingTool-config.toml')){//checks exists of file
+      try{
+        configFile = fs.readFileSync('./AutoCommentingTool-config.toml', 'utf-8');
+        config = toml.parse(configFile);
+      }catch(err){
+        console.error("Error found in toml file: ", err);
+      }
+    }
 
     var apiKey; //Setting up which api to use.
+   //gets groq api key but will get overrided by
+    apiKey = config?.api_key;
+    const tokenUsage = options.tokenUsage ?? config?.tokenusage ;  // Get the value of the --token-usage flag
+    const save = options.save ?? config?.save;
     if (options.api) {
       apiKey = options.api; //If user use --api
     }else{
       apiKey =process.env.GROQ_API_KEY;
     }
 
+
     for (let index = 0; index < program.args.length; index++) {
-      await readFromFile(program.args[index], options.save, tokenUsage, apiKey); // Added await to ensure async completion
+      await readFromFile(program.args[index], save, tokenUsage, apiKey); // Added await to ensure async completion
     }
   });
 // Parse the command-line arguments
