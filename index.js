@@ -35,11 +35,8 @@ export async function readFromFile(filename, outputfile, tokenUsage,apiKey) {
     var extention = filename.split('.').pop();
 
     //check if the file extention is valid
-    if (extention.search("ejs|js|ts|cpp|java|c|py|cs|PHP|swift|html|htm") === -1) {
-      //creating custom error for invalid file
-      const error = new Error("Invalid file format.");
-      console.error(`${error}`);
-      return;
+    if (!["ejs", "js", "ts", "cpp", "java", "c", "py", "cs", "php", "swift", "html", "htm"].includes(extention)) {
+      return reject(new Error("Invalid file format."));
     }
 
     
@@ -47,7 +44,7 @@ export async function readFromFile(filename, outputfile, tokenUsage,apiKey) {
     // Read the file using the fs.readFile() method
     fs.readFile(filename, 'utf8', async (err, data) => {
       if (err) {
-        return reject(err);
+        return reject(err); //reject if file not found
       }
 
       try {
@@ -112,7 +109,12 @@ program
 
 
     for (let index = 0; index < program.args.length; index++) {
-      await readFromFile(program.args[index], save, tokenUsage, apiKey); // Added await to ensure async completion
+      try{
+        await readFromFile(program.args[index], save, tokenUsage, apiKey); // Added await to ensure async completion
+
+      }catch(error){
+        console.log(error.message);
+      }
     }
   });
 // Parse the command-line arguments
