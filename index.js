@@ -105,13 +105,11 @@ program
       apiKey = options.api; //If user use --api
     }else{
       apiKey =process.env.GROQ_API_KEY;
-    }
+    };
 
-
-    for (let index = 0; index < program.args.length; index++) {
+    for (const filename of program.args) {
       try{
-        await readFromFile(program.args[index], save, tokenUsage, apiKey); // Added await to ensure async completion
-
+        await readFromFile(filename, save, tokenUsage, apiKey);// Added await to ensure async completion
       }catch(error){
         console.log(error.message);
       }
@@ -121,5 +119,3 @@ program
 program.parse(process.argv);
 
 
-//main();
-//console.log(readFromFile());
