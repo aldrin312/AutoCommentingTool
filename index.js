@@ -35,41 +35,37 @@ export async function readFromFile(filename, outputfile, tokenUsage,apiKey) {
     var extention = filename.split('.').pop();
 
     //check if the file extention is valid
-    if (extention.search("js|ts|cpp|java|c|py|cs|PHP|swift|html|htm") === -1) {
-      //creating custom error for invalid file
-      const error = new Error("Invalid file format.");
-      console.error(`${error}`);
-      return;
+    if (!["ejs", "js", "ts", "cpp", "java", "c", "py", "cs", "php", "swift", "html", "htm"].includes(extention)) {
+      return reject(new Error("Invalid file format."));
     }
 
+    
+
     // Read the file using the fs.readFile() method
-    fs.readFile(filename, 'utf8', async function (err, data) {
-      // Check for any errors while reading the file
+    fs.readFile(filename, 'utf8', async (err, data) => {
       if (err) {
-        console.error(`${err}`);
-        return;
+        return reject(err); //reject if file not found
       }
 
-      const chatCompletion = await getGroqChatCompletion(data,apiKey);
+      try {
+        const chatCompletion = await getGroqChatCompletion(data, apiKey);
 
-      // Output token usage if the flag is set
-      if (tokenUsage && chatCompletion.usage) {
-        console.log(`Token usage: ${JSON.stringify(chatCompletion.usage, null, 2)}`);
-      }
-      
-      //outputs
-      if (outputfile != null) {
-        //write the output to a file
-        writeIntoFile(chatCompletion.choices[0]?.message?.content || "", outputfile);
-      } else {
-        //write output to the console.
-        console.log(chatCompletion.choices[0]?.message?.content || "");
-      }
+        if (tokenUsage && chatCompletion.usage) {
+          console.log(`Token usage: ${JSON.stringify(chatCompletion.usage, null, 2)}`);
+        }
 
-      resolve(); // Resolve the promise after processing is done
+        if (outputfile) {
+          await writeIntoFile(chatCompletion.choices[0]?.message?.content || "", outputfile);
+        } else {
+          console.log(chatCompletion.choices[0]?.message?.content || "");
+        }
+
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
     });
   });
-
 }
 
 // Function to write data to a file
@@ -109,16 +105,17 @@ program
       apiKey = options.api; //If user use --api
     }else{
       apiKey =process.env.GROQ_API_KEY;
-    }
+    };
 
-
-    for (let index = 0; index < program.args.length; index++) {
-      await readFromFile(program.args[index], save, tokenUsage, apiKey); // Added await to ensure async completion
+    for (const filename of program.args) {
+      try{
+        await readFromFile(filename, save, tokenUsage, apiKey);// Added await to ensure async completion
+      }catch(error){
+        console.log(error.message);
+      }
     }
   });
 // Parse the command-line arguments
 program.parse(process.argv);
 
 
-//main();
-//console.log(readFromFile());
