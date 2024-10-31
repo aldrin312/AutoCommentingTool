@@ -1,6 +1,6 @@
 export function readFromFile(){
     // Require the file system module, allowing us to work with files on the file system
-    const fs = require('fs')
+    const fs = require('fs');
 
     // Try to read a file called 'tp.txt', passing the callback function to handle the result
     fs.readFile('tp.txt', (err, inputD) => {
@@ -8,5 +8,7 @@ export function readFromFile(){
         if (err) throw err;
         // If the file was read successfully, log its contents to the console
         console.log(inputD.toString());
-    })
+    });
 }
+
+
