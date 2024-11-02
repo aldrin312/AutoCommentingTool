@@ -5,24 +5,14 @@ Autocomment is a Cli tool that automates the process of adding meaningful commen
 
 ### Installation
 
-1. Get a free API Key at  https://console.groq.com
-2. Clone the repo
-   ```sh
-   git clone https://github.com/aldrin312/AutoCommentingTool.git
-   ```
-3. Install NPM packages
+1. Download the zip file.
+
+2. Install NPM packages
    ```sh
    npm install
    ```
-   ```sh
-   npm install --save groq-sdk
-   ```
-   ```sh
-   npm install commander
-   ```
-   ```sh
-   npm install dotenv
-   ```
+3. Get a free API Key at  https://console.groq.com
+
 4. Create a .env file and add your api into it
     ```sh
     GROQ_API_KEY=<api-key>
