@@ -11,7 +11,7 @@ describe('readFromFile', function() {
         const filename = 'test.js';
         const outputfile = null;
         const tokenUsage = false;
-        const apiKey = process.env.GROQ_API_KEY;
+        const apiKey = 'fake-api-key';
 
         // Mock the fs.readFile method
         const originalReadFile = fs.readFile;
@@ -31,7 +31,7 @@ describe('readFromFile', function() {
         const filename = 'test.invalid';
         const outputfile = null;
         const tokenUsage = false;
-        const apiKey = process.env.GROQ_API_KEY;
+        const apiKey = 'fake-api-key';
 
         try {
             await readFromFile(filename, outputfile, tokenUsage, apiKey);
@@ -46,7 +46,7 @@ describe('readFromFile', function() {
         const filename = 'test.js';
         const outputfile = null;
         const tokenUsage = false;
-        const apiKey = process.env.GROQ_API_KEY;
+        const apiKey = 'fake-api-key';
 
         // Mock the fs.readFile method to simulate an error
         const originalReadFile = fs.readFile;
