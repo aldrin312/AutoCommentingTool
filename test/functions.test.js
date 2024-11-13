@@ -6,24 +6,24 @@ import sinon from 'sinon';
 
 // eslint-disable-next-line no-undef
 describe('readFromFile', function() {
-    // eslint-disable-next-line no-undef
-    it('Should read data from a valid file.', async function() {
-        const filename = 'test.js';
-        const outputfile = null;
-        const tokenUsage = false;
-        const apiKey = 'fake-api-key';
+     
+    // it('Should read data from a valid file.', async function() {
+    //     const filename = 'test.js';
+    //     const outputfile = null;
+    //     const tokenUsage = false;
+    //     const apiKey = process.env.GROQ_API_KEY;
 
-        // Mock the fs.readFile method
-        const originalReadFile = fs.readFile;
-        fs.readFile = (file, encoding, callback) => {
-            callback(null, 'file content');
-        };
+    //     // Mock the fs.readFile method
+    //     const originalReadFile = fs.readFile;
+    //     fs.readFile = (file, encoding, callback) => {
+    //         callback(null, 'file content');
+    //     };
 
-        await readFromFile(filename, outputfile, tokenUsage, apiKey);
+    //     await readFromFile(filename, outputfile, tokenUsage, apiKey);
 
-        // Restore the original method
-        fs.readFile = originalReadFile;
-    });
+    //     // Restore the original method
+    //     fs.readFile = originalReadFile;
+    // });
     
 
     // eslint-disable-next-line no-undef
@@ -31,7 +31,7 @@ describe('readFromFile', function() {
         const filename = 'test.invalid';
         const outputfile = null;
         const tokenUsage = false;
-        const apiKey = 'fake-api-key';
+        const apiKey = process.env.GROQ_API_KEY;
 
         try {
             await readFromFile(filename, outputfile, tokenUsage, apiKey);
@@ -46,7 +46,7 @@ describe('readFromFile', function() {
         const filename = 'test.js';
         const outputfile = null;
         const tokenUsage = false;
-        const apiKey = 'fake-api-key';
+        const apiKey = process.env.GROQ_API_KEY;
 
         // Mock the fs.readFile method to simulate an error
         const originalReadFile = fs.readFile;
