@@ -1,8 +1,9 @@
 import { expect } from 'chai';
-import {readFromFile, getGroqChatCompletion} from '../index.js';
+import {readFromFile, getGroqChatCompletion,writeIntoFile} from '../index.js';
 import fs from 'fs';
 import Groq from 'groq-sdk';
 import sinon from 'sinon';
+
 
 // eslint-disable-next-line no-undef
 describe('readFromFile', function() {
@@ -96,5 +97,44 @@ describe('LLM App Tests', function() {
         });
     });
 });
+// eslint-disable-next-line no-undef
+describe('writeIntoFile', () => {
+    let writeFileStub;
+    // eslint-disable-next-line no-undef
+    beforeEach(() => {
+        writeFileStub = sinon.stub(fs, 'writeFile');
+    });
+    // eslint-disable-next-line no-undef
+    afterEach(() => {
+        writeFileStub.restore();
+    });
+    // eslint-disable-next-line no-undef
+    it('should write data to a file', async () => {
+        const data = 'test data';
+        const fileName = 'test.txt';
+
+        writeFileStub.yields(null); // Simulate successful write
+
+        await writeIntoFile(data, fileName);
+
+        expect(writeFileStub.calledOnce).to.be.true;
+        expect(writeFileStub.calledWith('Outputs/' + fileName, data)).to.be.true;
+    });
+    // eslint-disable-next-line no-undef
+    it('should throw an error if writeFile fails', async () => {
+        const data = 'test data';
+        const fileName = 'test.txt';
+
+        writeFileStub.yields(new Error('Failed to write file')); // Simulate write failure
+
+        try {
+            await writeIntoFile(data, fileName);
+            throw new Error('Expected error was not thrown');
+        } catch (err) {
+            expect(err.message).to.equal('Failed to write file');
+        }
+    });
+});
+
 
 
